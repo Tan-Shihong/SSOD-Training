@@ -1,0 +1,41 @@
+# Parameters
+project: '/content/runs/yolov5'
+adam: False
+epochs: 5
+weights: ''
+prune_finetune: False
+hyp:
+  lr0: 0.001
+  hsv_h: 0.015
+  hsv_s: 0.7
+  hsv_v: 0.4
+  lrf: 0.01
+
+Model:
+  depth_multiple: 0.33  # model depth multiple
+  width_multiple: 0.5  # layer channel multiple
+  Backbone: 
+    name: 'YoloV5'
+    activation: 'SiLU'
+  Neck: 
+    name: 'YoloV5' 
+    in_channels: [256, 512, 1024]
+    out_channels: [256, 512, 1024]
+    activation: 'SiLU'
+  Head: 
+    name: 'YoloV5'
+    activation: 'SiLU'
+  anchors: [[10,13, 16,30, 33,23],[30,61, 62,45, 59,119],[116,90, 156,198, 373,326]]  # P5/32]
+Loss:
+  type: 'ComputeLoss'
+
+Dataset:
+  data_name: 'Fuji-SfM-dataset-1'
+  train: data/datasets/Fuji-SfM-dataset-1/train.txt  # 118287 images
+  val: data/datasets/Fuji-SfM-dataset-1/val.txt  # 5000 images
+  test: data/datasets/Fuji-SfM-dataset-1/test.txt # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794^
+  nc: 1  # number of classes
+  np: 0 #number of keypoints
+  names: ['apple']
+  img_size: 800
+  batch_size: 16
